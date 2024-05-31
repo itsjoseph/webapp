@@ -1,11 +1,9 @@
 package com.jlagp.springboot.webapp.controllers;
 
+import com.jlagp.springboot.webapp.models.User;
 import com.jlagp.springboot.webapp.models.dto.ParamDTO;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/params")
@@ -40,5 +38,15 @@ public class RequestParamsController {
         ParamDTO paramsDTO = new ParamDTO();
         paramsDTO.setMensaje(request.getParameter("mensaje"));
         return paramsDTO;
+    }
+
+    @PostMapping("/create")
+    public User create(@RequestBody User user) {
+        //hacer algo con el usuario
+        String nombre;
+        user.setName(user.getName().toLowerCase());
+        user.setLastname(user.getLastname().toLowerCase());
+        user.setEmail(user.getEmail().toUpperCase());
+        return user;
     }
 }
