@@ -5,6 +5,9 @@ import com.jlagp.springboot.webapp.models.dto.ParamDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/params")
 public class RequestParamsController {
@@ -37,16 +40,24 @@ public class RequestParamsController {
         }
         ParamDTO paramsDTO = new ParamDTO();
         paramsDTO.setMensaje(request.getParameter("mensaje"));
+        paramsDTO.setCode(code);
         return paramsDTO;
     }
 
     @PostMapping("/create")
     public User create(@RequestBody User user) {
-        //hacer algo con el usuario
         String nombre;
         user.setName(user.getName().toLowerCase());
         user.setLastname(user.getLastname().toLowerCase());
         user.setEmail(user.getEmail().toUpperCase());
         return user;
+    }
+
+    @GetMapping("/mix/{product}/{id}")
+    public Map<String, Object> mixPathVar(@PathVariable String product, @PathVariable String id){
+        Map<String, Object> model = new HashMap<>();
+        model.put("product", product);
+        model.put("id", id);
+        return model;
     }
 }
